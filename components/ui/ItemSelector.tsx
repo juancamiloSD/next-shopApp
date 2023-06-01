@@ -4,10 +4,11 @@ import { FC } from "react"
 
 interface Props {
     selected?: ISizes,
-    sizes: ISizes[]
+    sizes: ISizes[],
+    onSelectedSize: ( size: ISizes ) => void
 }
 
-export const ItemSelector: FC<Props> = ({ selected, sizes }) => {
+export const ItemSelector: FC<Props> = ({ selected, sizes, onSelectedSize }) => {
   return (
     <Box>
         {
@@ -16,6 +17,7 @@ export const ItemSelector: FC<Props> = ({ selected, sizes }) => {
                     key={ size }
                     size='small'
                     color={ selected === size ? 'primary' : 'info' }
+                    onClick={ () => onSelectedSize( size ) }
                 >
                     { size }
                 </Button>
