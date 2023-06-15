@@ -6,13 +6,13 @@ import { useContext } from 'react';
 
 export const OrderSummary = () => {
 
-    const { numberOfItems, subTotal, total, taxRate } = useContext(CartContext)
+    const { numberOfItems, subTotal, total, tax } = useContext(CartContext)
 
   return (
     <Grid container>
         <Grid item xs={ 6 }>
             <Typography>
-                No hay productos
+                No. productos
             </Typography>
         </Grid>
         <Grid item xs={ 6 } display='flex' justifyContent='end'>
@@ -32,12 +32,12 @@ export const OrderSummary = () => {
         </Grid>
         <Grid item xs={ 6 }>
             <Typography>
-                Impuestos { Number(process.env.NEXT_PUBLIC_TAX_RATE) * 100 }%
+                Impuestos ({ Number(process.env.NEXT_PUBLIC_TAX_RATE) * 100 }%)
             </Typography>
         </Grid>
         <Grid item xs={ 6 } display='flex' justifyContent='end'>
             <Typography>
-                { currency.format(taxRate) }
+                { currency.format(tax) }
             </Typography>
         </Grid>
         <Grid item xs={ 6 } sx={{ mt:2 }}>

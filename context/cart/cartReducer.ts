@@ -1,5 +1,5 @@
-import { ICartProduct } from "@/interfaces/cart";
 import { CartState } from "./CartProvider";
+import { ICartProduct, ShippingAddress } from "@/interfaces";
 
 type CartActionType =
   | {
@@ -9,15 +9,18 @@ type CartActionType =
   | { type: "[Cart] - Update products in cart"; payload: ICartProduct[] }
   | { type: "[Cart] - Change cart quantity"; payload: ICartProduct }
   | { type: "[Cart] - Remove product in cart"; payload: ICartProduct }
+  | { type: "[Cart] - LoadAddress from Cookies"; payload: ShippingAddress }
+  | { type: "[Cart] - Update address"; payload: ShippingAddress }
   | {
       type: "[Cart] - Update order summary";
       payload: {
         numberOfItems: number;
         subTotal: number;
-        taxRate: number;
+        tax: number;
         total: number;
       };
-    };
+    }
+  | { type: "[Cart] - Order complete" };
 
 export const cartReducer = (
   state: CartState,
@@ -27,6 +30,7 @@ export const cartReducer = (
     case "[Cart] - LoadCart from cookies | storage":
       return {
         ...state,
+        isLoaded: true,
         cart: [...action.payload],
       };
     case "[Cart] - Update products in cart":
@@ -53,19 +57,26 @@ export const cartReducer = (
               product.size === action.payload.size
             )
         ),
-        // cart: state.cart.filter((product) => {
-        //   if (
-        //     product._id === action.payload._id &&
-        //     product.size === action.payload.size
-        //   ) {
-        //     return false;
-        //   }
-        //   return true;
       };
     case "[Cart] - Update order summary":
       return {
         ...state,
         ...action.payload,
+      };
+    case "[Cart] - Update address":
+    case "[Cart] - LoadAddress from Cookies":
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
+    case "[Cart] - Order complete":
+      return {
+        ...state,
+        cart: [],
+        numberOfItems: 0,
+        subTotal: 0,
+        tax: 0,
+        total: 0,
       };
     default:
       return state;

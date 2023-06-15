@@ -46,7 +46,7 @@ const ProductPage:NextPage<Props> = ({ product }) => {
   }
 
   const onAddProduct = () => {
-    if( !tempCartProduct.size ) return
+    if( !tempCartProduct.size ) { return }
     addProductToCart( tempCartProduct )
     router.push('/cart')
   }
@@ -123,7 +123,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug = '' } = params as { slug: string }
   const product = await dbProducts.getProductBySlug(slug)
 
-  if(!product){
+  if( !product ){
     return { 
       redirect: {
         destination: '/',

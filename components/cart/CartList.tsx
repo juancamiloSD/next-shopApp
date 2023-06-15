@@ -1,8 +1,7 @@
-import { initialData } from "@/database/products"
+import { FC, useContext } from "react";
 import { Grid, Link, Typography, CardActionArea, CardMedia, Box, Button } from '@mui/material';
 import NextLink from 'next/link';
 import { ItemCounter } from '../ui/ItemCounter';
-import { FC, useContext } from "react";
 import { CartContext } from "@/context";
 import { ICartProduct } from "@/interfaces/cart";
 
